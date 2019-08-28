@@ -16,9 +16,9 @@ It is designed for compile-time, link-time, run-time, and "idle-time" optimiz
 > Address sanitizer is used to detect memory corruptions occurring through heap overflows, stack buffer overflows or global buffer overflows. It also detects dangling pointers. All these conditions have no checking in C, C++ otherwise and can be the cause of program crashes, memory corruptions, segmentation faults and add vulnerability to programs. Here, the listed scenerios and depicted with code snippets and the detects with Asan.
 
 ## Useful Links you might want to visit
-[Address Sanitizer Wiki](https://en.wikipedia.org/wiki/AddressSanitizer) _Program examples in the repo are referred from this_
-[Github Address Sanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
-[Comparison of Asan and Valgrind](https://news.ycombinator.com/item?id=4737423)
-[What is shadow memory?](https://en.wikipedia.org/wiki/Shadow_memory)
-[Concept and severity of Stack buffer overflow](https://en.wikipedia.org/wiki/Stack_buffer_overflow)
-[Dangling pointer(https://en.wikipedia.org/wiki/]Dangling_pointer)
+- [Address Sanitizer Wiki](https://en.wikipedia.org/wiki/AddressSanitizer) _Program examples in the repo are referred from this_
+- [Github Address Sanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+- [Comparison of Asan and Valgrind](https://news.ycombinator.com/item?id=4737423)
+- [What is shadow memory?](https://en.wikipedia.org/wiki/Shadow_memory)
+- [Concept and severity of Stack buffer overflow](https://en.wikipedia.org/wiki/Stack_buffer_overflow)
+- [Dangling pointer(https://en.wikipedia.org/wiki/]Dangling_pointer)
