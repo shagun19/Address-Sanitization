@@ -1,0 +1,20 @@
+root@IP:~/asan_ex# clang -fsanitize=address -g global-buffer-overflow.c
+global-buffer-overflow.c:7:36: warning: format specifies type 'unsigned int' but the argument has type 'int *' [-Wformat]
+printf("addr 1 %u and addr 2 %u\n",global_arr,another_global);
+               ~~                  ^~~~~~~~~~
+global-buffer-overflow.c:7:47: warning: format specifies type 'unsigned int' but the argument has type 'int *' [-Wformat]
+printf("addr 1 %u and addr 2 %u\n",global_arr,another_global);
+                             ~~               ^~~~~~~~~~~~~~
+2 warnings generated.
+root@IP:~/asan_ex# ./a.out
+addr 1 6904288 and addr 2 6904384
+=================================================================
+==5484==ERROR: AddressSanitizer: global-buffer-overflow on address 0x000000695a0c at pc 0x47b875 bp 0x7ffc3cc828b0 sp 0x7ffc3cc828a8
+READ of size 4 at 0x000000695a0c thread T0
+    #0 0x47b874 in main /root/asan_ex/global-buffer-overflow.c:8
+    #1 0x7f5798773f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #2 0x47b47c in _start (/root/asan_ex/a.out+0x47b47c)
+ 
+0x000000695a0c is located 52 bytes to the left of global variable 'another_global' from 'global-buffer-overflow.c' (0x695a40) of size 40
+0x000000695a0c is located 4 bytes to the right of global variable 'global_arr' from 'global-buffer-overflow.c' (0x6959e0) of size 40
+SUMMARY: AddressSanitizer: global-buffer-overflow /root/asan_ex/global-buffer-overflow.c:8 main

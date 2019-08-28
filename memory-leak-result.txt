@@ -1,0 +1,12 @@
+root@IP:~/asan_ex# clang -fsanitize=leak -g memory-leak.c
+root@IP:~/asan_ex# ./a.out
+ 
+=================================================================
+==6648==ERROR: LeakSanitizer: detected memory leaks
+ 
+Direct leak of 52428800 byte(s) in 1 object(s) allocated from:
+    #0 0x4193fb in __interceptor_malloc /root/llvm-3.4/projects/compiler-rt/lib/lsan/lsan_interceptors.cc:68
+    #1 0x426abd in main /root/asan_ex/memory-leak.c:4
+    #2 0x7f8b69febf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+ 
+SUMMARY: LeakSanitizer: 52428800 byte(s) leaked in 1 allocation(s).

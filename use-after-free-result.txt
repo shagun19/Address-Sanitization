@@ -1,0 +1,23 @@
+root@IP:~/asan_ex# clang -fsanitize=address -g heap-use-after-free.c
+root@IP:~/asan_ex# ./a.out
+enter the index to retrieve
+45
+=================================================================
+==1146==ERROR: AddressSanitizer: heap-use-after-free on address 0x61400000fef4 at pc 0x47ba0d bp 0x7fff12abde50 sp 0x7fff12abde48
+READ of size 4 at 0x61400000fef4 thread T0
+    #0 0x47ba0c in main /root/asan_ex/heap-use-after-free.c:13
+    #1 0x7f1620b56f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #2 0x47b42c in _start (/root/asan_ex/a.out+0x47b42c)
+ 
+0x61400000fef4 is located 180 bytes inside of 400-byte region [0x61400000fe40,0x61400000ffd0)
+freed by thread T0 here:
+    #0 0x4651c9 in free /root/llvm-3.4/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x47b910 in main /root/asan_ex/heap-use-after-free.c:9
+    #2 0x7f1620b56f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+ 
+previously allocated by thread T0 here:
+    #0 0x465349 in __interceptor_malloc /root/llvm-3.4/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:74
+    #1 0x47b69a in main /root/asan_ex/heap-use-after-free.c:5
+    #2 0x7f1620b56f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+ 
+SUMMARY: AddressSanitizer: heap-use-after-free /root/asan_ex/heap-use-after-free.c:13 main

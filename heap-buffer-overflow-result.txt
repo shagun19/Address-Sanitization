@@ -1,0 +1,24 @@
+root@IP:~/asan_ex# clang -fsanitize=address -g heap-buffer-overflow.c
+heap-buffer-overflow.c:7:38: warning: format specifies type 'unsigned int' but the argument has type 'int *' [-Wformat]
+printf("Addr 1: %u and Addr 2: %u\n",ptr1,ptr2);
+                ~~                   ^~~~
+heap-buffer-overflow.c:7:43: warning: format specifies type 'unsigned int' but the argument has type 'int *' [-Wformat]
+printf("Addr 1: %u and Addr 2: %u\n",ptr1,ptr2);
+                               ~~         ^~~~
+2 warnings generated.
+root@198.18.85.33:~/asan_ex# ./a.out
+Addr 1: 57296 and Addr 2: 57232
+=================================================================
+==2978==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60400000dff8 at pc 0x47b95e bp 0x7fff13182f10 sp 0x7fff13182f08
+WRITE of size 4 at 0x60400000dff8 thread T0
+    #0 0x47b95d in main /root/asan_ex/heap-buffer-overflow.c:11
+    #1 0x7f1131124f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #2 0x47b42c in _start (/root/asan_ex/a.out+0x47b42c)
+ 
+0x60400000dff8 is located 0 bytes to the right of 40-byte region [0x60400000dfd0,0x60400000dff8)
+allocated by thread T0 here:
+    #0 0x465349 in __interceptor_malloc /root/llvm-3.4/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:74
+    #1 0x47b6b5 in main /root/asan_ex/heap-buffer-overflow.c:5
+    #2 0x7f1131124f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+ 
+SUMMARY: AddressSanitizer: heap-buffer-overflow /root/asan_ex/heap-buffer-overflow.c:11 main

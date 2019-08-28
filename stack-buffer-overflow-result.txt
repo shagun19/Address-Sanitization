@@ -1,0 +1,22 @@
+root@IP:~/asan_ex# clang -fsanitize=address -g stack-buffer-overflow.c
+root@IP.18.85.33:~/asan_ex# ./a.out shagahhwuywygdbhjebdjhebjhdbejgdevdjhebjdhbejhbdje
+=================================================================
+==3862==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffde5ea632f at pc 0x4563f0 bp 0x7ffde5ea6190 sp 0x7ffde5ea5948
+WRITE of size 51 at 0x7ffde5ea632f thread T0
+    #0 0x4563ef in strcpy /root/llvm-3.4/projects/compiler-rt/lib/asan/asan_interceptors.cc:490
+    #1 0x47b831 in main /root/asan_ex/stack-buffer-overflow.c:9
+    #2 0x7f89fcd4cf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #3 0x47b46c in _start (/root/asan_ex/a.out+0x47b46c)
+ 
+Address 0x7ffde5ea632f is located in stack of thread T0 at offset 239 in frame
+    #0 0x47b54f in main /root/asan_ex/stack-buffer-overflow.c:5
+ 
+  This frame has 5 object(s):
+    [32, 36) 'retval'
+    [96, 100) 'argc.addr'
+    [160, 168) 'argv.addr'
+    [224, 239) 'buff'
+    [288, 292) 'flag' <== Memory access at offset 239 partially underflows this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow /root/llvm-3.4/projects/compiler-rt/lib/asan/asan_interceptors.cc:490 strcpy
